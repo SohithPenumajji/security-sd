@@ -1,0 +1,4 @@
+{
+    "app_name": "Security-SDLC App",
+    "secret_key": "your_secret_key_here"
+}

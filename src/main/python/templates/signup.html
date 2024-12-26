@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <main>
+        <h2>Enhancing Security in SDLC</h2>
+        <section>
+            <h1><span>Join Us!</span></h1>
+            <form id="form" method="POST" action="/signup">
+                <label for="username">Username</label><br>
+                <input type="text" id="username" name="username" placeholder="Choose a username" required><br><br>
+                <label for="password">Password</label><br>
+                <input type="password" id="password" name="password" placeholder="Set a password" required><br>
+                <button type="submit" id="submit" value="Submit">Sign up</button>
+            </form><br><br>
+            <h4>Already have an account? <a href="/login">Sign in</a></h4>
+        </section>
+        <img src="{{ url_for('static', filename='coding3.jpg') }}" alt="Coding image">
+    </main>
+
+    <p id="error-message">{{ error_message }}</p>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('form');
+            form.addEventListener('submit', (e) => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                // Detect potential XSS patterns
+                const xssPattern = /<script>|<\/script>|on\w+=|javascript:/i;
+                if (xssPattern.test(username) || xssPattern.test(password)) {
+                    alert("Potential XSS attack detected!");
+                    e.preventDefault(); // Prevent form submission
+                    return;
+                }
+            });
+        });
+    </script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const form = document.getElementById('form');
+            form.addEventListener('submit', (e) => {
+                const username = document.getElementById('username').value;
+                const password = document.getElementById('password').value;
+
+                // Detect potential SQL Injection patterns
+                const sqlInject = /\b(select|union|insert|update|delete|drop|alter|create|--|;|#|')\b/i;
+                if (sqlInject.test(username) || sqlInject.test(password)) {
+                    alert("Potential SQL Injection attack detected!");
+                    e.preventDefault(); // Prevent form submission
+                    return;
+                }
+            });
+        });
+    </script>
+    
+</body>
+</html>
